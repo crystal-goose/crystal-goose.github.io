@@ -1,6 +1,6 @@
 ---
 layout: base
-title: redux thunk fetch logic etc.
+title: redux thunk fetch logic, test ...
 ---
 
 # redux thunk fetch logic
@@ -75,10 +75,22 @@ describe('async actions', () => {
 
 比较简单。Give state, action, verify new state is as expected
 
-# Connected component的测试
+# Component测试
+## Dumb component的测试
 
 检查是否渲染了需要的组件
 检查组件是否有需要的css class.
 检查组件接收到的props内容是否正确。
 可以直接调用props中的函数，然后检查期望的回调函数是否被触发（使用 jest.fn()可以对props中的函数进行mock，检查函数是否被调用）。
+
+## Connected component的测试
+
+可以用<Provider>提供真实的store.
+
+建议将Dumb Component也 export 出来。
+
+# Jest snapshot
+用于确保回归是原有功能不收影响，这个是最好的办法了。
+
+因为snapshot不处理event和props，所以这些还是需要测试的。
 

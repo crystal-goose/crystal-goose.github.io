@@ -1,3 +1,6 @@
+https://pdfs.semanticscholar.org/presentation/093c/8ece67ca38679ce2b35b151821dcc509ecd3.pdf
+
+Mumps
 Hierarchical database that can be thought of as
 multidimensional sparse associative arrays
 
@@ -5,3 +8,7 @@ multidimensional sparse associative arrays
 KV stores
 Big Tabel descendants
 Document oriented stores
+
+似乎是Document oriented stores更适合医疗？但Mumps的sparse associative arrays似乎更像Big table?
+
+把 Mumps 的toplevel array切分成独立的document。
