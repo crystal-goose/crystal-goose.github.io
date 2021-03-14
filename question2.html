@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Question 2</title>
+    <meta charset="UTF-8">
+    
+    <!-- Main page CSS -->
+    <link rel="stylesheet" type="text/css" href="specktackle/css/index.css">
+    <!-- SpeckTackle CSS containing chart stylings -->
+    <link rel="stylesheet" type="text/css" href="specktackle/css/st.css">
+    
+    <!-- SpeckTackle library -->
+    <script type="text/javascript", src="specktackle/st.js"></script>
+    <!-- SpeckTackle dependencies -->
+    <script type="text/javascript", src="specktackle/libs/d3/d3.js"></script>
+    <script type="text/javascript", src="specktackle/libs/jquery/jquery.js"></script>
+
+    <script type="text/javascript">
+        // chart for question 2 of SpeckTackle charts
+        var chart;
+        
+        function nmr () {                       // NMR stub
+            $("#stgraph").empty();
+            $("#adddata").removeAttr("disabled")
+                .attr("onclick","loadNMR()");
+                
+            chart = st.chart
+                .nmr() // return a chart object here
+                .legend(true)
+                // .title("NMR")
+                .xlabel("ppm")
+                .labels(true)
+                .margins([80, 80, 80, 80]);
+            chart.render("#stgraph");
+        };
+
+        function ms () {
+            $("#stgraph").empty();                 // clear DOM child elements
+            $("#adddata").removeAttr("disabled")   // enable 'Add Data' button
+                .attr("onclick","loadMS2()");// point to data loader
+                
+            chart = st.chart                    // create a new MS chart
+                .ms()                           // chart type
+                .legend(true)                   // options
+                .xlabel("Mass-to-Charge")
+                .ylabel("Integsity")
+                .labels(true)
+                .margins([80, 80, 80, 120]);
+            chart.render("#stgraph");           // render chart to id 'stgraph'
+        }
+
+        function loadNMR() {
+            var array = st.data.array()     // data type (array)
+                .xlimits(["xMin", "xMax"])
+                .ylimits(["yMin", "yMax"])
+                .y("data")                  // one dimensional array
+                //.title("id");
+            chart.load(array);   
+            array.add([
+                // "data/BML_Analysis_349.xml.json",
+                "specktackle/resources/nmr1.json",
+                // "specktackle/resources/nmr2.json",
+            ]);
+        }
+
+        function loadMS () {
+            var set = st.data.set()        // data type (set)
+                .ylimits([0, 1100])        // y-axis limits
+                .x("peaks.mz")             // x-accessor
+                .y("peaks.intensity")      // y-accessor
+                .title("spectrumId");      // id-accessor
+                
+            // annotation structure
+            // set.annotationColumn(st.annotation.ANNOTATION, "Ticks");
+            // set.annotationColumn(st.annotation.TOOLTIP, "Origin");
+            // set.annotationColumn(st.annotation.TOOLTIP_MOL, "Ion");
+            // set.annotationColumn(st.annotation.TOOLTIP_MOL, "Frag");
+            
+            chart.load(set);               // bind the data set
+            set.add([                      // input array
+                "specktackle/resources/data1.json",
+                "specktackle/resources/data2.json",
+                "specktackle/resources/data3.json"
+            ], [                           // input annotation array
+                "specktackle/resources/data1_anno.json",
+                "",
+                ""
+            ]);
+        }
+
+        function loadMS2 () {
+            var set = st.data.set()        
+                .ylimits([0, 1000])        
+                .x("peaks.mz")             
+                .y("peaks.intensity")      
+                .title("spectrumId");      
+                
+            chart.load(set);               
+            set.add([                      
+                // "specktackle/resources/single_point_1.json",
+                "specktackle/resources/data1.json",
+                // "data/CCMSLIB00000578035.json",
+            ]);
+        }
+        
+    </script>
+
+</head>
+<body>
+    <div id="wrap">
+        <h2>Question2: specktackle based</h2>
+        <ul>
+            <li><button onclick="nmr()">NMR</button></li>
+            <li><button onclick="ms()">MS</button></li>
+            <li><button id="adddata" disabled="disabled">Add Data</button></li>
+        </ul>
+        <hr>
+        <!-- Container for all charts: '#stgraph' -->
+        <div id="stgraph" class="stgraph" style="margin:auto;float:initial;"></div>
+        <h2 style="clear:both;">Question2: d3.js based</h2>
+        <div id="d3nmr"></div>
+        <div id="d3ms"></div>
+        <hr>
+
+    </div>
+</body>
+</html>
